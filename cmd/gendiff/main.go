@@ -1,8 +1,8 @@
 package main
 
 import (
+	code "code/src"
 	"context"
-	"fmt"
 	"log"
 	"os"
 
@@ -29,8 +29,7 @@ func main() {
 				path2 = cmd.Args().Get(1)
 			}
 			format := cmd.String("format")
-			fmt.Println(path1, path2, format)
-
+			code.GenDiff(path1, path2, format)
 			return nil
 		},
 	}
