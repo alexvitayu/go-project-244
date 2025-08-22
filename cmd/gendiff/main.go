@@ -3,6 +3,7 @@ package main
 import (
 	code "code/src"
 	"context"
+	"fmt"
 	"log"
 	"os"
 
@@ -29,7 +30,11 @@ func main() {
 				path2 = cmd.Args().Get(1)
 			}
 			format := cmd.String("format")
-			code.GenDiff(path1, path2, format)
+			str, err := code.GenDiff(path1, path2, format)
+			if err != nil {
+				log.Println(err)
+			}
+			fmt.Println(str)
 			return nil
 		},
 	}
