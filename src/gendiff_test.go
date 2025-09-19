@@ -12,9 +12,9 @@ import (
 
 // мой тест с использованием фикстур
 func TestGenDiffWithFixtures(t *testing.T) {
-	path1 := filepath.Join("../testdata/file1.json") //фикстура №1
-	path2 := filepath.Join("../testdata/file2.json") //фикстура №2
-	path3 := filepath.Join("../testdata/result.txt") //фикстура №3
+	path1 := filepath.Join("../testdata/fixture/file1.json") //фикстура №1
+	path2 := filepath.Join("../testdata/fixture/file2.json") //фикстура №2
+	path3 := filepath.Join("../testdata/fixture/result.txt") //фикстура №3
 
 	str, err := GenDiff(path1, path2, "stylish")
 	require.NoError(t, err) // если произошла ошибка в основном коде, то и нет смысла двигаться дальше
