@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/urfave/cli/v3"
+	cli "github.com/urfave/cli/v3"
 )
 
 func main() {
