@@ -11,9 +11,22 @@ import (
 )
 
 // мой тест с использованием фикстур
-func TestGenDiffWithFixtures(t *testing.T) {
+func TestGenDiffWithFixturesJson(t *testing.T) {
 	path1 := filepath.Join("../testdata/fixture/file1.json") //фикстура №1
 	path2 := filepath.Join("../testdata/fixture/file2.json") //фикстура №2
+	path3 := filepath.Join("../testdata/fixture/result.txt") //фикстура №3
+
+	str, err := GenDiff(path1, path2, "stylish")
+	require.NoError(t, err) // если произошла ошибка в основном коде, то и нет смысла двигаться дальше
+
+	bytes, err := os.ReadFile(path3)
+	require.NoError(t, err)             // если произошла ошибка чтения, то нет смысла идти дальше
+	assert.Equal(t, string(bytes), str) // утверждаем, что ожидаемая строка равна полученной строке
+}
+
+func TestGenDiffWithFixturesYaml(t *testing.T) {
+	path1 := filepath.Join("../testdata/fixture/file1.yml")  //фикстура №1
+	path2 := filepath.Join("../testdata/fixture/file2.yml")  //фикстура №2
 	path3 := filepath.Join("../testdata/fixture/result.txt") //фикстура №3
 
 	str, err := GenDiff(path1, path2, "stylish")

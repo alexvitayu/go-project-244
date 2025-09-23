@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/stretchr/testify/assert/yaml"
 )
 
 func GenDiff(path1, path2, format string) (string, error) {
@@ -35,19 +37,28 @@ func toAbsolutePath(path1, path2 string) (p1, p2 string) {
 }
 
 func parseDataFromFiles(path1, path2 string) (data1, data2 map[string]interface{}, err error) {
+	dataFile1, _ := os.ReadFile(path1)
+	dataFile2, _ := os.ReadFile(path2)
+	var data11 map[string]interface{}
+	var data22 map[string]interface{}
 	switch {
 	case filepath.Ext(path1) == ".json" && filepath.Ext(path2) == ".json":
-		var data1 map[string]interface{}
-		var data2 map[string]interface{}
-		dataFile1, _ := os.ReadFile(path1)
-		dataFile2, _ := os.ReadFile(path2)
-		if err := json.Unmarshal(dataFile1, &data1); err != nil {
+
+		if err := json.Unmarshal(dataFile1, &data11); err != nil {
 			return nil, nil, errors.New("не удалось преобразовать из json")
 		}
-		if err := json.Unmarshal(dataFile2, &data2); err != nil {
+		if err := json.Unmarshal(dataFile2, &data22); err != nil {
 			return nil, nil, errors.New("не удалось преобразовать из json")
 		}
-		return data1, data2, nil
+		return data11, data22, nil
+	case filepath.Ext(path1) == ".yml" && filepath.Ext(path2) == ".yml":
+		if err := yaml.Unmarshal(dataFile1, &data11); err != nil {
+			return nil, nil, errors.New("не удалось преобразовать из yaml")
+		}
+		if err := yaml.Unmarshal(dataFile2, &data22); err != nil {
+			return nil, nil, errors.New("не удалось преобразовать из yaml")
+		}
+		return data11, data22, nil
 	default:
 		return nil, nil, errors.New("неизвестный формат данных")
 	}
