@@ -2,6 +2,7 @@ package parsers
 
 import (
 	"errors"
+	"fmt"
 	"path/filepath"
 	"testing"
 
@@ -24,8 +25,8 @@ func TestParseDataFromFiles(t *testing.T) {
 		},
 		{
 			name:      "BothFilesAreYaml",
-			filename1: filepath.Join("../../testdata/fixture/file1.yml"),
-			filename2: filepath.Join("../../testdata/fixture/file2.yml"),
+			filename1: filepath.Join("../../testdata/fixture/file1-1.yaml"),
+			filename2: filepath.Join("../../testdata/fixture/file2-1.yaml"),
 			expected: [3]interface{}{map[string]interface{}{"follow": false, "host": "hexlet.io", "proxy": "123.234.53.22", "timeout": 50},
 				map[string]interface{}{"host": "hexlet.io", "timeout": 20, "verbose": true}, nil},
 		},
@@ -45,6 +46,7 @@ func TestParseDataFromFiles(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			got1, got2, err := ParseDataFromFiles(tc.filename1, tc.filename2)
+			fmt.Println(got1, got2)
 			if got1 != nil && got2 != nil {
 				assert.Equal(t, got1, tc.expected[0])
 				assert.Equal(t, got2, tc.expected[1])

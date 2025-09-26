@@ -1,4 +1,4 @@
-package code
+package src
 
 import (
 	"code/src/parsers"
@@ -15,6 +15,7 @@ func GenDiff(path1, path2, format string) (string, error) {
 		return "", fmt.Errorf("parseDataFromFiles: %w", err)
 	}
 	str := genDiff(data1, data2)
+	//str := compareTreeStructures(data1, data2)
 	return str, nil
 }
 

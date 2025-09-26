@@ -3,9 +3,10 @@ package parsers
 import (
 	"encoding/json"
 	"errors"
-	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
+
+	"gopkg.in/yaml.v3"
 )
 
 func ParseDataFromFiles(path1, path2 string) (res1, res2 map[string]interface{}, err error) {

@@ -1,4 +1,4 @@
-package code
+package src
 
 import (
 	"os"
