@@ -1,7 +1,7 @@
 package main
 
 import (
-	code "code/src"
+	"code/src"
 	"context"
 	"fmt"
 	"log"
@@ -30,7 +30,7 @@ func main() {
 				path2 = cmd.Args().Get(1)
 			}
 			format := cmd.String("format")
-			str, err := code.GenDiff(path1, path2, format)
+			str, err := src.GenDiff(path1, path2, format)
 			if err != nil {
 				log.Println(err)
 			}

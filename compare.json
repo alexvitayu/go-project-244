@@ -1,0 +1,154 @@
+[
+{
+"Message": "",
+"DifTest": {
+"common": [
+{
+"Message": " # Добавлена",
+"DifTest": {
+"follow": false
+}
+},
+{
+"Message": "",
+"DifTest": {
+"setting1": "Value 1"
+}
+},
+{
+"Message": " # Удалена",
+"DifTest": {
+"setting2": 200
+}
+},
+{
+"Message": " # Старое значение",
+"DifTest": {
+"setting3": true
+}
+},
+{
+"Message": " # Новое значение",
+"DifTest": {
+"setting3": null
+}
+},
+{
+"Message": " # Добавлена",
+"DifTest": {
+"setting4": "blah blah"
+}
+},
+{
+"Message": " # Добавлена",
+"DifTest": {
+"setting5": {
+"key5": "value5"
+}
+}
+},
+{
+"Message": "",
+"DifTest": {
+"setting6": [
+{
+"Message": "",
+"DifTest": {
+"doge": [
+{
+"Message": " # Старое значение",
+"DifTest": {
+"wow": ""
+}
+},
+{
+"Message": " # Новое значение",
+"DifTest": {
+"wow": "so much"
+}
+}
+]
+}
+},
+{
+"Message": "",
+"DifTest": {
+"key": "value"
+}
+},
+{
+"Message": " # Добавлена",
+"DifTest": {
+"ops": "vops"
+}
+}
+]
+}
+}
+]
+}
+},
+{
+"Message": "",
+"DifTest": {
+"group1": [
+{
+"Message": " # Старое значение",
+"DifTest": {
+"baz": "bas"
+}
+},
+{
+"Message": " # Новое значение",
+"DifTest": {
+"baz": "bars"
+}
+},
+{
+"Message": "",
+"DifTest": {
+"foo": "bar"
+}
+},
+{
+"Message": " # Старое значение",
+"DifTest": {
+"nest": {
+"key": "value"
+}
+}
+},
+{
+"Message": " # Новое значение",
+"DifTest": {
+"nest": "str"
+}
+}
+]
+}
+},
+{
+"Message": " # Удалена",
+"DifTest": {
+"group2": {
+"abc": 12345,
+"deep": {
+"id": 45
+}
+}
+}
+},
+{
+"Message": " # Добавлена",
+"DifTest": {
+"group3": {
+"deep": {
+"id": {
+"number": 45
+}
+},
+"fee": 100500
+}
+}
+}
+]

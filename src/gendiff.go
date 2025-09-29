@@ -1,6 +1,8 @@
 package src
 
 import (
+	"code/src/compare"
+	"code/src/formatter"
 	"code/src/parsers"
 	"fmt"
 	"path/filepath"
@@ -14,8 +16,10 @@ func GenDiff(path1, path2, format string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("parseDataFromFiles: %w", err)
 	}
-	str := genDiff(data1, data2)
-	//str := compareTreeStructures(data1, data2)
+	diff := compare.Compare(data1, data2)
+
+	str := formatter.FormatDiff(diff)
+
 	return str, nil
 }
 
