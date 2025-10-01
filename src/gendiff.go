@@ -16,6 +16,7 @@ func GenDiff(path1, path2, format string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("parseDataFromFiles: %w", err)
 	}
+	//path := make([]string, 0)
 	diff := compare.Compare(data1, data2)
 
 	str := formatter.FormatDiff(diff)

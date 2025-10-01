@@ -7,37 +7,49 @@
 "Message": " # Добавлена",
 "DifTest": {
 "follow": false
-}
+},
+"Type": "+ ",
+"IsNode": false
 },
 {
 "Message": "",
 "DifTest": {
 "setting1": "Value 1"
-}
+},
+"Type": "  ",
+"IsNode": false
 },
 {
 "Message": " # Удалена",
 "DifTest": {
 "setting2": 200
-}
+},
+"Type": "- ",
+"IsNode": false
 },
 {
 "Message": " # Старое значение",
 "DifTest": {
 "setting3": true
-}
+},
+"Type": "- ",
+"IsNode": false
 },
 {
 "Message": " # Новое значение",
 "DifTest": {
 "setting3": null
-}
+},
+"Type": "+ ",
+"IsNode": false
 },
 {
 "Message": " # Добавлена",
 "DifTest": {
 "setting4": "blah blah"
-}
+},
+"Type": "+ ",
+"IsNode": false
 },
 {
 "Message": " # Добавлена",
@@ -45,7 +57,9 @@
 "setting5": {
 "key5": "value5"
 }
-}
+},
+"Type": "+ ",
+"IsNode": false
 },
 {
 "Message": "",
@@ -59,34 +73,48 @@
 "Message": " # Старое значение",
 "DifTest": {
 "wow": ""
-}
+},
+"Type": "- ",
+"IsNode": false
 },
 {
 "Message": " # Новое значение",
 "DifTest": {
 "wow": "so much"
-}
+},
+"Type": "+ ",
+"IsNode": false
 }
 ]
-}
+},
+"Type": "",
+"IsNode": true
 },
 {
 "Message": "",
 "DifTest": {
 "key": "value"
-}
+},
+"Type": "  ",
+"IsNode": false
 },
 {
 "Message": " # Добавлена",
 "DifTest": {
 "ops": "vops"
-}
+},
+"Type": "+ ",
+"IsNode": false
 }
 ]
-}
+},
+"Type": "",
+"IsNode": true
 }
 ]
-}
+},
+"Type": "",
+"IsNode": true
 },
 {
 "Message": "",
@@ -96,19 +124,25 @@
 "Message": " # Старое значение",
 "DifTest": {
 "baz": "bas"
-}
+},
+"Type": "- ",
+"IsNode": false
 },
 {
 "Message": " # Новое значение",
 "DifTest": {
 "baz": "bars"
-}
+},
+"Type": "+ ",
+"IsNode": false
 },
 {
 "Message": "",
 "DifTest": {
 "foo": "bar"
-}
+},
+"Type": "  ",
+"IsNode": false
 },
 {
 "Message": " # Старое значение",
@@ -116,16 +150,22 @@
 "nest": {
 "key": "value"
 }
-}
+},
+"Type": "- ",
+"IsNode": false
 },
 {
 "Message": " # Новое значение",
 "DifTest": {
 "nest": "str"
-}
+},
+"Type": "+ ",
+"IsNode": false
 }
 ]
-}
+},
+"Type": "",
+"IsNode": true
 },
 {
 "Message": " # Удалена",
@@ -136,7 +176,9 @@
 "id": 45
 }
 }
-}
+},
+"Type": "- ",
+"IsNode": false
 },
 {
 "Message": " # Добавлена",
@@ -149,6 +191,8 @@
 },
 "fee": 100500
 }
-}
+},
+"Type": "+ ",
+"IsNode": false
 }
 ]
