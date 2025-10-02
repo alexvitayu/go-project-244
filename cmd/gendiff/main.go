@@ -2,6 +2,7 @@ package main
 
 import (
 	"code/src"
+	"code/src/formatters"
 	"context"
 	"fmt"
 	"log"
@@ -30,11 +31,12 @@ func main() {
 				path2 = cmd.Args().Get(1)
 			}
 			format := cmd.String("format")
-			str, err := src.GenDiff(path1, path2, format)
+			diff, err := src.GenDiff(path1, path2)
 			if err != nil {
 				log.Println(err)
 			}
-			fmt.Println(str)
+			formater := formatters.Format(format)
+			fmt.Println(formater.FormatDiff(diff))
 			return nil
 		},
 	}

@@ -12,11 +12,11 @@ import (
 func ParseDataFromFiles(path1, path2 string) (res1, res2 map[string]interface{}, err error) {
 	file1, err := os.ReadFile(path1)
 	if err != nil {
-		return nil, nil, errors.New("не удалось прочитать файл")
+		return nil, nil, errors.New("не удалось прочитать файл 1")
 	}
 	file2, err := os.ReadFile(path2)
 	if err != nil {
-		return nil, nil, errors.New("не удалось прочитать файл")
+		return nil, nil, errors.New("не удалось прочитать файл 2")
 	}
 	var data1 map[string]interface{}
 	var data2 map[string]interface{}
