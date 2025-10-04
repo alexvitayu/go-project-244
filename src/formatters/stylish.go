@@ -38,7 +38,7 @@ func PrintMap(m compare.Diff, depth int) string {
 		case []compare.Diff:
 			b.WriteString(key + ": {" + "\n")
 			b.WriteString(PrintArray(m, key, v, depth))
-			b.WriteString(SetIndent(m, depth) + "}" + "\n")
+			b.WriteString(AdjustIndent(m, depth) + "}" + "\n")
 		case map[string]interface{}:
 			b.WriteString(key + ": {" + "\n")
 			b.WriteString(PrintObject(m, v, depth))
@@ -92,6 +92,8 @@ func SetPrefix(diff compare.Diff) string {
 		return "- "
 	case " # Равны":
 		return "  "
+	case " # Объекты":
+		return "  "
 	default:
 		return ""
 	}
@@ -102,12 +104,17 @@ func SetIndent(diff compare.Diff, depth int) string {
 	var indent string
 	baseIndent := strings.Repeat("    ", depth+1)
 	shiftLeft := "  "
-	if diff.Message == " # Добавлена" || diff.Message == " # Новое значение" || diff.Message == " # Удалена" || diff.Message == " # Старое значение" || diff.Message == " # Равны" {
+	if diff.Message == " # Добавлена" ||
+		diff.Message == " # Новое значение" ||
+		diff.Message == " # Удалена" ||
+		diff.Message == " # Старое значение" ||
+		diff.Message == " # Равны" ||
+		diff.Message == " # Объекты" {
 		indent = strings.TrimSuffix(baseIndent, shiftLeft)
 		return indent
 	} else if diff.Message == "" && !diff.IsNode {
 		return baseIndent
-	} else if diff.Message == "" && diff.IsNode {
+	} else if diff.Message == " # Объекты" && diff.IsNode {
 		return baseIndent
 	}
 	return ""
@@ -119,7 +126,12 @@ func AdjustIndent(diff compare.Diff, depth int) string {
 	shiftLeft := "  "
 	if diff.IsNode {
 		return baseIndent
-	} else if diff.Message == " # Добавлена" || diff.Message == " # Новое значение" || diff.Message == " # Удалена" || diff.Message == " # Старое значение" || diff.Message == " # Равны" {
+	} else if diff.Message == " # Добавлена" ||
+		diff.Message == " # Новое значение" ||
+		diff.Message == " # Удалена" ||
+		diff.Message == " # Старое значение" ||
+		diff.Message == " # Равны" ||
+		diff.Message == " # Объекты" {
 		indent = strings.TrimSuffix(baseIndent, shiftLeft)
 		return indent
 	}

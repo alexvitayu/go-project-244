@@ -51,8 +51,9 @@ func Compare(obj1, obj2 map[string]interface{}, basePath string) []Diff {
 				DifTest: map[string]any{
 					key: childDiff,
 				},
-				Path:   path,
-				IsNode: true,
+				Path:    path,
+				IsNode:  true,
+				Message: " # Объекты",
 			}
 			diffs = append(diffs, dif)
 			repeatedKeys[key] = true

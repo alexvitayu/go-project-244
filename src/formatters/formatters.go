@@ -10,6 +10,8 @@ func Format(flag string) Formater {
 	switch flag {
 	case "plain":
 		return NewPlainFormatter()
+	case "json":
+		return NewJsonFormatter()
 	default:
 		return NewStylish()
 	}
