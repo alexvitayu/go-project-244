@@ -23,11 +23,16 @@ func NewPlainFormatter() *PlainFormatter {
 
 func (st *PlainFormatter) FormatDiff(diffs []compare.Diff) (string, error) {
 	b := strings.Builder{}
-	b.WriteString("\n")
 	keys := processKeys(diffs)
 	properties, _ := process(diffs, keys, 0)
-	for _, p := range properties {
+	for i, p := range properties {
+		if p.message == " # Объекты" {
+			continue
+		}
 		b.WriteString(printPlain(p))
+		if i != len(properties)-1 {
+			b.WriteString("\n")
+		}
 	}
 	return b.String(), nil
 }
@@ -39,24 +44,24 @@ func printPlain(p Property) string {
 	if !compare.SimpleType(p.value1) && p.value1 != nil {
 		val1 = printValue("[complex value]")
 	} else if p.value1 == nil {
-		val1 = nil
+		val1 = printValue(nil)
 	} else {
 		val1 = printValue(p.value1)
 	}
 	if !compare.SimpleType(p.value2) && p.value2 != nil {
 		val2 = printValue("[complex value]")
 	} else if p.value2 == nil {
-		val2 = nil
+		val2 = printValue(nil)
 	} else {
 		val2 = printValue(p.value2)
 	}
 	switch p.message {
 	case " # Добавлена":
-		b.WriteString("Property" + color.YellowString(fmt.Sprintf(" '%v' ", strings.TrimPrefix(p.path, "."))) + "was added with value: " + fmt.Sprint(val1) + "\n")
+		b.WriteString("Property" + color.YellowString(fmt.Sprintf(" '%v' ", strings.TrimPrefix(p.path, "."))) + "was added with value: " + fmt.Sprint(val1))
 	case " # Новое значение", " # Старое значение":
-		b.WriteString("Property" + color.YellowString(fmt.Sprintf(" '%v' ", strings.TrimPrefix(p.path, "."))) + "was updated. " + fmt.Sprintf("From %v to %v", val1, val2) + "\n")
+		b.WriteString("Property" + color.YellowString(fmt.Sprintf(" '%v' ", strings.TrimPrefix(p.path, "."))) + "was updated. " + fmt.Sprintf("From %v to %v", val1, val2))
 	case " # Удалена":
-		b.WriteString("Property" + color.YellowString(fmt.Sprintf(" '%v' ", strings.TrimPrefix(p.path, "."))) + "was removed" + "\n")
+		b.WriteString("Property" + color.YellowString(fmt.Sprintf(" '%v' ", strings.TrimPrefix(p.path, "."))) + "was removed")
 	}
 	return b.String()
 }
@@ -70,7 +75,9 @@ func printValue(val any) string {
 	case bool:
 		return fmt.Sprint(val)
 	case nil:
-		return fmt.Sprint(nil)
+		return "null"
+	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64:
+		return fmt.Sprint(val)
 	default:
 		return color.YellowString(fmt.Sprintf("'%v'", val))
 	}
@@ -96,6 +103,10 @@ func process(diffs []compare.Diff, keys []string, startIndex int) ([]Property, i
 	index := startIndex
 	for j := 0; j < len(diffs) && index < len(keys); j++ {
 		currentDiff := diffs[j]
+		if currentDiff.Message == " # Равны" {
+			index++
+			continue
+		}
 		currentValue := currentDiff.DifTest[keys[index]]
 		switch v := currentValue.(type) {
 		case []compare.Diff:

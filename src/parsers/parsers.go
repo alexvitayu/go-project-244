@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func ParseDataFromFiles(path1, path2 string) (res1, res2 map[string]interface{}, err error) {
+func ParseDataFromFiles(path1, path2 string) (res1, res2 any, err error) {
 	file1, err := os.ReadFile(path1)
 	if err != nil {
 		return nil, nil, errors.New("не удалось прочитать файл 1")
@@ -18,8 +18,8 @@ func ParseDataFromFiles(path1, path2 string) (res1, res2 map[string]interface{},
 	if err != nil {
 		return nil, nil, errors.New("не удалось прочитать файл 2")
 	}
-	var data1 map[string]interface{}
-	var data2 map[string]interface{}
+	var data1 any
+	var data2 any
 	var ext1 = filepath.Ext(path1)
 	var ext2 = filepath.Ext(path2)
 

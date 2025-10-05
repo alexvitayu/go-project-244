@@ -37,21 +37,30 @@ func printStylish(m compare.Diff, depth int) string {
 		switch v := value.(type) {
 		case []compare.Diff:
 			b.WriteString(key + ": {" + "\n")
-			b.WriteString(printArray(m, key, v, depth))
+			b.WriteString(printArray(v, depth))
 			b.WriteString(adjustIndent(m, depth) + "}" + "\n")
 		case map[string]interface{}:
 			b.WriteString(key + ": {" + "\n")
-			b.WriteString(printObject(m, v, depth))
+			b.WriteString(printObject(v, depth))
 			b.WriteString(adjustIndent(m, depth) + "}" + "\n")
 		default:
-			b.WriteString(key + ": " + fmt.Sprint(value) + "\n")
+			b.WriteString(key + ": " + formatValue(value) + "\n")
 		}
 	}
 	return b.String()
 }
 
+func formatValue(val any) string {
+	switch val.(type) {
+	case nil:
+		return "null"
+	default:
+		return fmt.Sprint(val)
+	}
+}
+
 // printArray реализует рекурсию по значениям, если они слайсы
-func printArray(m compare.Diff, key string, value []compare.Diff, depth int) string {
+func printArray(value []compare.Diff, depth int) string {
 	b := strings.Builder{}
 	for _, v := range value {
 		b.WriteString(printStylish(v, depth+1)) // Рекурсивный шаг
@@ -60,7 +69,7 @@ func printArray(m compare.Diff, key string, value []compare.Diff, depth int) str
 }
 
 // printObject реализует рекурсию по значениям, если они map-ы
-func printObject(a compare.Diff, m map[string]interface{}, depth int) string {
+func printObject(m map[string]interface{}, depth int) string {
 	b := strings.Builder{}
 	sortedKeys := normalizeKeys(m)
 	for _, key := range sortedKeys {

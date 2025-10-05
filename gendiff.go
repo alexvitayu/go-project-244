@@ -1,25 +1,30 @@
-package src
+package code
 
 import (
 	"code/src/compare"
+	"code/src/formatters"
 	"code/src/parsers"
 	"fmt"
 	"path/filepath"
 )
 
-func GenDiff(path1, path2 string) ([]compare.Diff, error) {
+func GenDiff(path1, path2, format string) (string, error) {
 	abs1, abs2, err := toAbsolutePath(path1, path2)
 	if err != nil {
-		return nil, fmt.Errorf("toAbsolutePath: %w", err)
+		return "", fmt.Errorf("toAbsolutePath: %w", err)
 	}
 	data1, data2, err := parsers.ParseDataFromFiles(abs1, abs2)
 	if err != nil {
-		return nil, fmt.Errorf("parseDataFromFiles: %w", err)
+		return "", fmt.Errorf("parseDataFromFiles: %w", err)
 	}
-	path := ""
-	diff := compare.Compare(data1, data2, path)
-
-	return diff, nil
+	basePath := ""
+	diff := compare.Compare(data1, data2, basePath)
+	formater := formatters.Format(format)
+	str, err := formater.FormatDiff(diff)
+	if err != nil {
+		return "", fmt.Errorf("formatDiff: %w", err)
+	}
+	return str, nil
 }
 
 func toAbsolutePath(path1, path2 string) (string, string, error) {
