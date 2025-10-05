@@ -48,7 +48,7 @@
           "newValue": [
             {
               "path": ".common.setting6.doge.wow",
-              "message": "changed",
+              "message": "modified",
               "oldValue": "",
               "newValue": "so much"
             }
@@ -71,13 +71,13 @@
     "newValue": [
       {
         "path": ".group1.baz",
-        "message": "changed",
+        "message": "modified",
         "oldValue": "bas",
         "newValue": "bars"
       },
       {
         "path": ".group1.nest",
-        "message": "changed",
+        "message": "modified",
         "oldValue": {
           "key": "value"
         },

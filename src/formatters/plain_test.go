@@ -16,8 +16,9 @@ func TestFormatDiffPlain(t *testing.T) {
 	path3 := filepath.Join("../../testdata/fixture/complicated/expectPlain.txt") //фикстура №3
 
 	diff, err := src.GenDiff(path1, path2)
+	require.NoError(t, err)
 	formater := Format("plain")
-	str := formater.FormatDiff(diff)
+	str, err := formater.FormatDiff(diff)
 	require.NoError(t, err) // если произошла ошибка в основном коде, то и нет смысла двигаться дальше
 
 	bytes, err := os.ReadFile(path3)

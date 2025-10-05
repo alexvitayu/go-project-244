@@ -21,18 +21,18 @@ func NewPlainFormatter() *PlainFormatter {
 	return &PlainFormatter{}
 }
 
-func (st *PlainFormatter) FormatDiff(diffs []compare.Diff) string {
+func (st *PlainFormatter) FormatDiff(diffs []compare.Diff) (string, error) {
 	b := strings.Builder{}
 	b.WriteString("\n")
-	keys := ProcessKeys(diffs)
-	properties, _ := Process(diffs, keys, 0)
+	keys := processKeys(diffs)
+	properties, _ := process(diffs, keys, 0)
 	for _, p := range properties {
-		b.WriteString(PrintPlain(p))
+		b.WriteString(printPlain(p))
 	}
-	return b.String()
+	return b.String(), nil
 }
 
-func PrintPlain(p Property) string {
+func printPlain(p Property) string {
 	b := strings.Builder{}
 	var val1 any
 	var val2 any
@@ -76,14 +76,14 @@ func printValue(val any) string {
 	}
 }
 
-func ProcessKeys(diffs []compare.Diff) []string {
+func processKeys(diffs []compare.Diff) []string {
 	var allKeys []string
 	for _, diff := range diffs {
 		for key, value := range diff.DifTest {
 			allKeys = append(allKeys, key)
 			_, ok := value.([]compare.Diff)
 			if ok {
-				keys := ProcessKeys(value.([]compare.Diff))
+				keys := processKeys(value.([]compare.Diff))
 				allKeys = append(allKeys, keys...)
 			}
 		}
@@ -91,9 +91,8 @@ func ProcessKeys(diffs []compare.Diff) []string {
 	return allKeys
 }
 
-func Process(diffs []compare.Diff, keys []string, startIndex int) ([]Property, int) {
+func process(diffs []compare.Diff, keys []string, startIndex int) ([]Property, int) {
 	properties := []Property{}
-	//keys := ProcessKeys(diffs, 0)
 	index := startIndex
 	for j := 0; j < len(diffs) && index < len(keys); j++ {
 		currentDiff := diffs[j]
@@ -108,7 +107,7 @@ func Process(diffs []compare.Diff, keys []string, startIndex int) ([]Property, i
 				value2:  nil,
 			}
 			properties = append(properties, pr)
-			childProp, newIndex := Process(v, keys, index+1)
+			childProp, newIndex := process(v, keys, index+1)
 			properties = append(properties, childProp...)
 			index = newIndex
 		default:
