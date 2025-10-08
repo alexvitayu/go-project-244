@@ -1,60 +1,78 @@
 package parsers
 
 import (
+	"fmt"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestParseDataFromFiles(t *testing.T) {
-	//var testCases = []struct {
-	//	name      string
-	//	filename1 string
-	//	filename2 string
-	//	expected  [3]interface{}
-	//}{
-	//	{
-	//		name:      "BothFilesAreJson",
-	//		filename1: filepath.Join("../../testdata/fixture/file1.json"),
-	//		filename2: filepath.Join("../../testdata/fixture/file2.json"),
-	//		expected: [3]interface{}{map[string]interface{}{"follow": false, "host": "hexlet.io", "proxy": "123.234.53.22", "timeout": float64(50)},
-	//			map[string]interface{}{"host": "hexlet.io", "timeout": float64(20), "verbose": true}, nil},
-	//	},
-	//	{
-	//		name:      "BothFilesAreYaml",
-	//		filename1: filepath.Join("../../testdata/fixture/file1-1.yaml"),
-	//		filename2: filepath.Join("../../testdata/fixture/file2-1.yaml"),
-	//		expected: [3]interface{}{map[string]interface{}{"follow": false, "host": "hexlet.io", "proxy": "123.234.53.22", "timeout": 50},
-	//			map[string]interface{}{"host": "hexlet.io", "timeout": 20, "verbose": true}, nil},
-	//	},
-	//	{
-	//		name:      "WrongFormatFiles",
-	//		filename1: filepath.Join("../../testdata/fixture/file1.pdf"),
-	//		filename2: filepath.Join("../../testdata/fixture/file2.pdf"),
-	//		expected:  [3]interface{}{nil, nil, errors.New("неизвестный формат данных")},
-	//	},
-	//	{
-	//		name:      "DifferentFileFormats",
-	//		filename1: filepath.Join("../../testdata/fixture/file1.json"),
-	//		filename2: filepath.Join("../../testdata/fixture/file2.pdf"),
-	//		expected:  [3]interface{}{nil, nil, errors.New("разные форматы данных")},
-	//	},
-	//}
-	//for _, tc := range testCases {
-	//	t.Run(tc.name, func(t *testing.T) {
-	//		got1, got2, err := ParseDataFromFiles(tc.filename1, tc.filename2)
-	//		fmt.Println(got1, got2)
-	//		if got1 != nil && got2 != nil {
-	//			assert.Equal(t, got1, tc.expected[0])
-	//			assert.Equal(t, got2, tc.expected[1])
-	//		} else {
-	//			assert.Nil(t, got1)
-	//			assert.Nil(t, got2)
-	//		}
-	//		expectedErr := tc.expected[2]
-	//		if expectedErr == nil {
-	//			assert.NoError(t, err)
-	//		} else {
-	//			assert.ErrorAs(t, err, &expectedErr)
-	//		}
-	//	})
-	//}
+	var testCases = []struct {
+		name      string
+		path1     string
+		path2     string
+		expected1 any
+		expected2 any
+		isErr     bool
+		errText   string
+	}{
+		{
+			name:      "yamlFiles",
+			path1:     "../../testdata/fixture/complicated/file1-1.yaml",
+			path2:     "../../testdata/fixture/complicated/file2-1.yaml",
+			expected1: `map[common:map[setting1:Value 1 setting2:200 setting3:true setting6:map[doge:map[wow:] key:value]] group1:map[baz:bas foo:bar nest:map[key:value]] group2:map[abc:12345 deep:map[id:45]]]`,
+			expected2: `map[common:map[follow:false setting1:Value 1 setting3:<nil> setting4:blah blah setting5:map[key5:value5] setting6:map[doge:map[wow:so much] key:value ops:vops]] group1:map[baz:bars foo:bar nest:str] group3:map[deep:map[id:map[number:45]] fee:100500]]`,
+			isErr:     false,
+		},
+		{
+			name:      "ymlFiles",
+			path1:     "../../testdata/fixture/file1.yml",
+			path2:     "../../testdata/fixture/file2.yml",
+			expected1: `map[follow:false host:hexlet.io proxy:123.234.53.22 timeout:50]`,
+			expected2: `map[host:hexlet.io timeout:20 verbose:true]`,
+			isErr:     false,
+		},
+		{
+			name:      "jsonFiles",
+			path1:     "../../testdata/fixture/file1.json",
+			path2:     "../../testdata/fixture/file2.json",
+			expected1: `map[follow:false host:hexlet.io proxy:123.234.53.22 timeout:50]`,
+			expected2: `map[host:hexlet.io timeout:20 verbose:true]`,
+			isErr:     false,
+		},
+		{
+			name:      "differentFileFormats",
+			path1:     "../../testdata/fixture/file1.yml",
+			path2:     "../../testdata/fixture/file2.json",
+			expected1: nil,
+			expected2: nil,
+			isErr:     true,
+			errText:   "разные форматы данных",
+		},
+		{
+			name:      "unknownFileFormats",
+			path1:     "../../testdata/fixture/file1.pdf",
+			path2:     "../../testdata/fixture/file2.pdf",
+			expected1: nil,
+			expected2: nil,
+			isErr:     true,
+			errText:   "неизвестный формат данных",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			got1, got2, err := ParseDataFromFiles(tc.path1, tc.path2)
+			if tc.isErr {
+				require.Error(t, err)
+				assert.Equal(t, tc.errText, err.Error())
+			} else {
+				require.NoError(t, err)
+				assert.Equal(t, tc.expected1, fmt.Sprint(got1))
+				assert.Equal(t, tc.expected2, fmt.Sprint(got2))
+			}
+		})
+	}
 }

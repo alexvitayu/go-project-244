@@ -41,14 +41,16 @@ func printPlain(p Property) string {
 	b := strings.Builder{}
 	var val1 any
 	var val2 any
-	if !compare.SimpleType(p.value1) && p.value1 != nil {
+	_, isSimp1 := compare.SimpleType(p.value1)
+	_, isSimp2 := compare.SimpleType(p.value2)
+	if !isSimp1 && p.value1 != nil {
 		val1 = printValue("[complex value]")
 	} else if p.value1 == nil {
 		val1 = printValue(nil)
 	} else {
 		val1 = printValue(p.value1)
 	}
-	if !compare.SimpleType(p.value2) && p.value2 != nil {
+	if !isSimp2 && p.value2 != nil {
 		val2 = printValue("[complex value]")
 	} else if p.value2 == nil {
 		val2 = printValue(nil)
@@ -86,13 +88,15 @@ func printValue(val any) string {
 func processKeys(diffs []compare.Diff) []string {
 	var allKeys []string
 	for _, diff := range diffs {
-		for key, value := range diff.DifTest {
-			allKeys = append(allKeys, key)
-			_, ok := value.([]compare.Diff)
-			if ok {
-				keys := processKeys(value.([]compare.Diff))
-				allKeys = append(allKeys, keys...)
-			}
+		currentPath := diff.Path
+		parts := strings.Split(currentPath, ".")
+		key := parts[len(parts)-1]
+		value := check(diff.OldValue, diff.NewValue)
+		allKeys = append(allKeys, key)
+		_, ok := value.([]compare.Diff)
+		if ok {
+			keys := processKeys(value.([]compare.Diff))
+			allKeys = append(allKeys, keys...)
 		}
 	}
 	return allKeys
@@ -107,7 +111,7 @@ func process(diffs []compare.Diff, keys []string, startIndex int) ([]Property, i
 			index++
 			continue
 		}
-		currentValue := currentDiff.DifTest[keys[index]]
+		currentValue := check(currentDiff.OldValue, currentDiff.NewValue)
 		switch v := currentValue.(type) {
 		case []compare.Diff:
 			// Обрабатываем элемент верхнего уровня
@@ -129,7 +133,7 @@ func process(diffs []compare.Diff, keys []string, startIndex int) ([]Property, i
 				diffs[j].Path == diffs[j+1].Path {
 				// Создаем Property со старым и новым значением
 				nextDiff := diffs[j+1]
-				nextValue := nextDiff.DifTest[keys[index+1]]
+				nextValue := nextDiff.NewValue
 				prop := Property{
 					path:    currentDiff.Path,
 					message: currentDiff.Message,

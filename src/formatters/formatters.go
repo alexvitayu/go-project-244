@@ -1,6 +1,8 @@
 package formatters
 
-import "code/src/compare"
+import (
+	"code/src/compare"
+)
 
 type Formater interface {
 	FormatDiff([]compare.Diff) (string, error)

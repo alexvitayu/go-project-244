@@ -1,0 +1,1 @@
+[{false .follow  # Удалена false <nil>} {false .host  # Равны hexlet.io hexlet.io} {false .proxy  # Удалена 123.234.53.22 <nil>} {false .timeout  # Старое значение 50 <nil>} {false .timeout  # Новое значение <nil> 20} {false .verbose  # Добавлена <nil> true}]

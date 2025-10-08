@@ -20,7 +20,9 @@
         "path": ".common.setting3",
         "message": "modified",
         "oldValue": true,
-        "newValue": null
+        "newValue": {
+          "key": "value"
+        }
       },
       {
         "path": ".common.setting4",
@@ -49,7 +51,7 @@
               {
                 "path": ".common.setting6.doge.wow",
                 "message": "modified",
-                "oldValue": "",
+                "oldValue": "too much",
                 "newValue": "so much"
               }
             ]
@@ -108,5 +110,67 @@
       },
       "fee": 100500
     }
+  },
+  {
+    "path": ".group4",
+    "message": "objects",
+    "oldValue": null,
+    "newValue": [
+      {
+        "path": ".group4.default",
+        "message": "modified",
+        "oldValue": null,
+        "newValue": ""
+      },
+      {
+        "path": ".group4.foo",
+        "message": "modified",
+        "oldValue": 0,
+        "newValue": null
+      },
+      {
+        "path": ".group4.isNested",
+        "message": "modified",
+        "oldValue": false,
+        "newValue": "none"
+      },
+      {
+        "path": ".group4.key",
+        "message": "added",
+        "oldValue": null,
+        "newValue": false
+      },
+      {
+        "path": ".group4.nest",
+        "message": "objects",
+        "oldValue": null,
+        "newValue": [
+          {
+            "path": ".group4.nest.bar",
+            "message": "modified",
+            "oldValue": "",
+            "newValue": 0
+          },
+          {
+            "path": ".group4.nest.isNested",
+            "message": "deleted",
+            "oldValue": true,
+            "newValue": null
+          }
+        ]
+      },
+      {
+        "path": ".group4.someKey",
+        "message": "added",
+        "oldValue": null,
+        "newValue": true
+      },
+      {
+        "path": ".group4.type",
+        "message": "modified",
+        "oldValue": "bas",
+        "newValue": "bar"
+      }
+    ]
   }
 ]
