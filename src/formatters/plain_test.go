@@ -17,13 +17,13 @@ func TestFormatDiffPlain(t *testing.T) {
 		path3 string
 	}{
 		{
-			name:  "complicatedYamlFiles",
+			name:  "complicated_yaml_files",
 			path1: "../../testdata/fixture/complicated/file1-1.yaml",
 			path2: "../../testdata/fixture/complicated/file2-1.yaml",
 			path3: "../../testdata/fixture/complicated/expectPlain.txt",
 		},
 		{
-			name:  "hexletJsonFiles",
+			name:  "hexlet_json_files",
 			path1: "../../testdata/hexlet_testdata/file1.json",
 			path2: "../../testdata/hexlet_testdata/file2.json",
 			path3: "../../testdata/hexlet_testdata/result_plain.txt",
