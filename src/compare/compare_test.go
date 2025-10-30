@@ -39,7 +39,9 @@ func TestCompare(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
+		tc := tc
 		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 			val1, val2, err := parsers.ParseDataFromFiles(tc.path1, tc.path2)
 			require.NoError(t, err)
 			got := compare.Compare(val1, val2, "")
