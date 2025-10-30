@@ -1,0 +1,1 @@
+[{false [0] mismatched types текст map[nested:объект]} {false [1] mismatched types 76 false} {false [2] mismatched types false 1202} {false [3] mismatched types <nil> [вложенный1 массив1]} {false [4] mismatched types map[nested:объект] [вложенный2 массив2]} {false [5]  # Удалена [вложенный массив] <nil>}]

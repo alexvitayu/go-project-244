@@ -19,16 +19,22 @@ func TestCompare(t *testing.T) {
 		path3 string
 	}{
 		{
-			name:  "simpleJsonFiles",
+			name:  "simple_json_files",
 			path1: "../../testdata/fixture/file1.json",
 			path2: "../../testdata/fixture/file2.json",
 			path3: "../../testdata/fixture/simpleDiff.txt",
 		},
 		{
-			name:  "complicatedYamlFiles",
+			name:  "complicated_yaml_files",
 			path1: "../../testdata/fixture/complicated/file1-1.yaml",
 			path2: "../../testdata/fixture/complicated/file2-1.yaml",
 			path3: "../../testdata/fixture/complicated/complicatedDiff.txt",
+		},
+		{
+			name:  "json_files_with_arrays",
+			path1: "../../testdata/fixture/array1.json",
+			path2: "../../testdata/fixture/array2.json",
+			path3: "../../testdata/fixture/withArrayDiff.txt",
 		},
 	}
 

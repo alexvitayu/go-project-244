@@ -28,6 +28,9 @@ func GenDiff(path1, path2, format string) (string, error) {
 }
 
 func toAbsolutePath(path1, path2 string) (string, string, error) {
+	if path1 == "" || path2 == "" {
+		return "", "", fmt.Errorf("некорректный ввод путей")
+	}
 	var abs1 string
 	var abs2 string
 	var err error
@@ -36,13 +39,11 @@ func toAbsolutePath(path1, path2 string) (string, string, error) {
 		abs2 = path2
 		return abs1, abs2, nil
 	}
-	abs1, err = filepath.Abs(path1)
-	if err != nil {
-		return "", "", fmt.Errorf("не удалось преобразовать путь %s в абсолютный: %w", path1, err)
+	abs1, err1 := filepath.Abs(path1)
+	abs2, err2 := filepath.Abs(path2)
+	if err1 != nil || err2 != nil {
+		return "", "", fmt.Errorf("не удалось преобразовать путь в абсолютный: %w", err)
+	} else {
+		return abs1, abs2, nil
 	}
-	abs2, err = filepath.Abs(path2)
-	if err != nil {
-		return "", "", fmt.Errorf("не удалось преобразовать путь %s в абсолютный: %w", path2, err)
-	}
-	return abs1, abs2, nil
 }
