@@ -49,7 +49,7 @@ func TestParseDataFromFiles(t *testing.T) {
 			expected1: nil,
 			expected2: nil,
 			isErr:     true,
-			errText:   "разные форматы данных",
+			errText:   "mismatched file formats",
 		},
 		{
 			name:      "unknown_file_formats",
@@ -58,7 +58,7 @@ func TestParseDataFromFiles(t *testing.T) {
 			expected1: nil,
 			expected2: nil,
 			isErr:     true,
-			errText:   "неизвестный формат данных",
+			errText:   "unknown file formats",
 		},
 	}
 

@@ -50,7 +50,7 @@ func TestGenDiff(t *testing.T) {
 			"json",
 			"",
 			true,
-			"toAbsolutePath: некорректный ввод путей",
+			"toAbsolutePath: incorrect path input",
 		},
 		{"error_different_file_formats",
 			"testdata/hexlet_testdata/file1.yml",
@@ -58,7 +58,7 @@ func TestGenDiff(t *testing.T) {
 			"json",
 			"",
 			true,
-			"parseDataFromFiles: разные форматы данных",
+			"ParseDataFromFiles: mismatched file formats",
 		},
 	}
 	for _, tc := range testCases {

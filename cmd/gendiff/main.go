@@ -35,7 +35,7 @@ func main() {
 			format := cmd.String("format")
 			result, err := code.GenDiff(path1, path2, format)
 			if err != nil {
-				log.Println(err)
+				log.Fatal(err)
 			}
 			fmt.Println(result)
 			return nil

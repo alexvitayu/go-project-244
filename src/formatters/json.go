@@ -4,7 +4,6 @@ import (
 	"code/src/compare"
 
 	"encoding/json"
-	"errors"
 	"fmt"
 	"strings"
 )
@@ -41,7 +40,7 @@ func printJson(jDiffs []HexletJson) (string, error) {
 	}
 	bytes, err := json.MarshalIndent(jD, "", "  ")
 	if err != nil {
-		return "", errors.New("не удалось преобразовать в json")
+		return "", fmt.Errorf("convert_to_json: %w", err)
 	}
 	return string(bytes), nil
 }
